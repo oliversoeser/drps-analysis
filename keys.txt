@@ -1,0 +1,33 @@
+Course Outline,outline
+School,school
+College,college
+Credit level (Normal year taken),level_year
+Availability,availability
+SCQF Credits,scqf
+ECTS Credits,ects
+Summary,summary
+Course description,description
+Entry Requirements (not applicable to Visiting Students),entry
+Pre-requisites,pre_req
+Co-requisites,co_req
+Prohibited Combinations,prohibited
+Other requirements,other_req
+Additional Costs,costs
+Information for Visiting Students,visiting
+High Demand Course?,high_demand
+Course Delivery Information,delivery
+Course Start,start
+Timetable,timetable
+Learning and Teaching activities (Further Info),learning
+Additional Information (Learning and Teaching),add_learning
+Assessment (Further Info),assessment
+Additional Information (Assessment),add_assessment
+Feedback,feedback
+Learning Outcomes,outcomes
+Reading List,reading
+Additional Information,additional
+Graduate Attributes and Skills,skills
+Keywords,keywords
+Contacts,contacts
+Course organiser,organiser
+Course secretary,secretary
