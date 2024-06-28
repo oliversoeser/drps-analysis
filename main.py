@@ -19,4 +19,4 @@ for school in schools:
             with open(DATA + course.replace("htm", "json"), "w", encoding="utf-8") as f:
                 f.write(json.dumps(page))
         except:
-            print(f"Course {course} was not read, the URL likely does not exist.")
+            print(f"Failed to extract data from {course}, it likely does not exist.")
