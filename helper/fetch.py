@@ -7,15 +7,12 @@ CACHE = "./cache/"
 
 def get(url: str, wait: int = 2) -> str:
     if os.path.isfile(CACHE + url):
-        f = open(CACHE + url, "r", encoding="utf-8")
-        text = f.read()
-        f.close()
+        with open(CACHE + url, "r", encoding="utf-8") as f:
+            text = f.read()
         return text
     else:
-        print(url, "not in cache, downloading...")
         res = requests.get(BASE_URL + url)
-        f = open(CACHE + url, "w", encoding="utf-8")
-        f.write(res.text)
-        f.close()
+        with open(CACHE + url, "w", encoding="utf-8") as f:
+            f.write(res.text)
         time.sleep(wait)
         return res.text

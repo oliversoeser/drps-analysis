@@ -1,11 +1,11 @@
 from bs4 import BeautifulSoup
 
+with open("keys.txt", "r") as keyfile:
+    keys_text = keyfile.read()
+
+keys = {key[0]: key[1] for key in [line.split(",") for line in keys_text.split("\n")]}
+
 def extract(html: str):
-    with open("keys.txt", "r") as keyfile:
-        keys_text = keyfile.read()
-
-    keys = {key[0]: key[1] for key in [line.split(",") for line in keys_text.split("\n")]}
-
     html = BeautifulSoup(html, features="lxml")
     html = html.find_all("table")[2]
 
