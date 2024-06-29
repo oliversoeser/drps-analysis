@@ -59,9 +59,7 @@ for node in net.nodes:
     node["label"] = title
     node["color"] = id_to_color(course_id)
 
-    #if id_to_color(course_id) == "#9819e8":
-    #    print(course_id)
-
-print(sorted(list(set(subjects))))
+    if id_to_color(course_id) == "#9819e8":
+        print(course_id)
 
 net.show("plot.html")
