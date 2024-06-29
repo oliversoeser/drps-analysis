@@ -12,7 +12,7 @@ connections = {}
 
 for key in course_keys:
     requirements = courses[key]["entry"]["pre_req"].lower()
-    connections[key] = re.findall(COURSE_ID_REGEX, requirements)
+    connections[key] = [req for req in re.findall(COURSE_ID_REGEX, requirements) if req in course_keys]
 
 with open("connections.json", "w", encoding="utf-8") as f:
     f.write(json.dumps(connections))
