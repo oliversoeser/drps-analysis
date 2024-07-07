@@ -1,13 +1,21 @@
 from bs4 import BeautifulSoup
 
+# Read data keys
 with open("keys.txt", "r") as keyfile:
     keys_text = keyfile.read()
 
 keys = {key[0]: key[1] for key in [line.split(",") for line in keys_text.split("\n")]}
 
+# Data extraction
 def extract(html: str):
     html = BeautifulSoup(html, features="lxml")
-    html = html.find_all("table")[2]
+    tables = html.find_all("table")
+
+    # Detect 404s
+    if len(tables) < 3:
+        return {}
+
+    html = tables[2]
 
     page = {}
     page["title"] = html.find("h1").decode_contents()
@@ -27,12 +35,11 @@ def extract(html: str):
                 text = data.text
                 # Remove trailing and leading whitespace, as well as empty lines
                 text = "\n".join([line.strip() for line in text.split("\n") if line.strip() != ""])
-                if section == "outcomes":
-                    page[section] = text
-                elif section == "reading":
+                if section in ["outcomes", "reading"]:
                     page[section] = text
                 elif text in keys.keys():
                     key = keys[text]
                 elif key != "":
                     page[section][key] = text
+    
     return page
