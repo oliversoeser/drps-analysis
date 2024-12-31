@@ -8,14 +8,7 @@ WHITE = 0
 GREY = 1
 BLACK = 2
 
-# Edge from Vertex a to Vertex b
-class Edge:
-    a, b = None, None
-
-    def __init__(self, start, end):
-        self.a, self.b = start, end
-
-# Graph using adjacency lists
+# Standard graph using adjacency lists
 class Graph:
     adj = []
     n = 0
@@ -28,8 +21,8 @@ class Graph:
         self.n += 1
         return self.n - 1
 
-    def addEdge(self, start_id, end_id):
-        self.adj[start_id].append(end_id)
+    def addEdge(self, start, end):
+        self.adj[start].append(end)
 
     def topSort(self):
         self.state = [WHITE] * self.n
@@ -54,36 +47,41 @@ class Graph:
         self.L.append(v)
 
 class PriorityVertex:
-    id, priority = None, None
-
     def __init__(self, id, priority):
         self.id = id
         self.priority = priority
     
-    # Operations are swapped to turn the min heap into a max heap
+    # Comparison operations are swapped to turn the heapq min-heap into a max-heap
     def __lt__(self, other):
         return self.priority > other.priority
 
     def __gt__(self, other):
         return self.priority < other.priority
 
+# Graph where each vertex has an associated priority
 class PriorityGraph(Graph):
+    V = []
     priorities = []
-    V_heap = []
-    adj_heaps = []
+
+    V_heap = None
+    adj_heaps = None
 
     def addVertex(self, priority):
         self.priorities.append(priority)
-        self.adj_heaps.append([])
+        self.V.append(PriorityVertex(len(self.V), priority))
         return super().addVertex()
     
+    def addEdge(self, start, end):
+        self.adj[start].append(PriorityVertex(end, self.priorities[end]))
+    
     def topSort(self):
-        for i, priority in enumerate(self.priorities):
-            heapq.heappush(self.V_heap, PriorityVertex(i, priority))
+        self.V_heap = self.V.copy()
+        heapq.heapify(self.V_heap)
 
-        for i, adj in enumerate(self.adj):
-            for w in adj:
-                heapq.heappush(self.adj_heaps[i], PriorityVertex(w, self.priorities[w]))
+        self.adj_heaps = []
+        for v in range(self.n):
+            self.adj_heaps.append(self.adj[v].copy())
+            heapq.heapify(self.adj_heaps[v])
 
         self.state = [WHITE] * self.n
         self.L = []
