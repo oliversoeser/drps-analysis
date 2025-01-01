@@ -10,11 +10,16 @@ BLACK = 2
 
 # Standard graph using adjacency lists
 class Graph:
-    adj = []
-    n = 0
+    def __init__(self):
+        self.adj = []
+        self.n = 0
 
-    state = None
-    L = None
+        self.state = None
+        self.L = None
+
+        self.visited = None
+        self.CC = None
+    
 
     def addVertex(self):
         self.adj.append([])
@@ -45,6 +50,25 @@ class Graph:
         
         self.state[v] = BLACK
         self.L.append(v)
+    
+    def connComp(self):
+        self.visited = [False] * self.n
+        self.CC = []
+
+        for v in range(self.n):
+            if self.visited[v] == False:
+                self.CC.append([])
+                self.ccFromVertex(v)
+
+        return self.CC
+
+    def ccFromVertex(self, v):
+        self.visited[v] = True
+        self.CC[len(self.CC)-1].append(v)
+
+        for w in self.adj[v]:
+            if self.visited[w] == False:
+                self.ccFromVertex(w)
 
 class PriorityVertex:
     def __init__(self, id, priority):
@@ -60,11 +84,14 @@ class PriorityVertex:
 
 # Graph where each vertex has an associated priority
 class PriorityGraph(Graph):
-    V = []
-    priorities = []
+    def __init__(self):
+        super().__init__()
 
-    V_heap = None
-    adj_heaps = None
+        self.V = []
+        self.priorities = []
+
+        self.V_heap = None
+        self.adj_heaps = None
 
     def addVertex(self, priority):
         self.priorities.append(priority)
