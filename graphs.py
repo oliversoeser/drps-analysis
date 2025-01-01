@@ -19,7 +19,6 @@ class Graph:
 
         self.visited = None
         self.CC = None
-    
 
     def addVertex(self):
         self.adj.append([])
