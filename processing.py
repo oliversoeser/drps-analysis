@@ -9,7 +9,11 @@ def prereq(s):
 
 def year(s):
     m = re.match(SCQF_PATTERN, s)
-    return m.groupdict()["year"]
+    year = m.groupdict()["year"]
+    if year == None:
+        return 999
+    else:
+        return year
 
 def level(s):
     m = re.match(SCQF_PATTERN, s)
@@ -25,3 +29,6 @@ def semester(s):
         return 1
     else:
         return m.groupdict()["semester"]
+
+def list_order(l):
+    return list(reversed(list(l)))
